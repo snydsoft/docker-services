@@ -1,6 +1,6 @@
-# dev-services
+# dev-docker-services
 
-my private development services (webserver, database, ci etc )
+my private development services ( webserver, database, ci etc )
 
 ### Prepare before docker contaniner services for development
 
