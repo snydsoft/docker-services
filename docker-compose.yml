@@ -49,4 +49,4 @@ services:
 networks:
   default:
     external:
-      name: 'dev-network'
+      name: 'dev-docker-services'
