@@ -6,8 +6,8 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - ./config/${ENV-dev}/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./config/${ENV-dev}/nginx/conf.d:/etc/nginx/conf.d
       - ./volumes/nginx/logs:/var/log/nginx
   jenkins:
     image: jenkins:latest
@@ -25,7 +25,7 @@ services:
     ports:
       - 27017:27017
   mysql:
-    image: draconids/mysql:5.7.16
+    image: mysql:5.7.16
     restart: always
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
