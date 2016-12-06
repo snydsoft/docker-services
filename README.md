@@ -1,20 +1,22 @@
-# dev-docker-services
+# docker-services
 
-my private development services ( webserver, database, ci etc )
+my private services ( webserver, database, ci etc ) on development, stage, production
 
-### Prepare before docker contaniner services for development
+### Prepare before docker contaniner up services 
 
 ```
-$ docker network create -d bridge dev-docker-services
+$ docker network create -d bridge docker-services
 ```
 
 ### Usage
 
-for use this services you must append compose file on end line.
+for use this services you must add to end of the file.
+
+docker-compose.yml
 
 ```
 networks:
   default:
     external:
-      name: 'dev-docker-services'
+      name: 'docker-services'
 ```

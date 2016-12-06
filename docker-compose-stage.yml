@@ -1,0 +1,52 @@
+version: '2'
+services:
+  nginx:
+    image: nginx:1.10.2
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
+      - ./volumes/nginx/logs:/var/log/nginx
+  jenkins:
+    image: jenkins:latest
+    restart: always
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - ./volumes/jenkins:/var/jenkins_home
+  mongo:
+    image: mongo:3.4.0
+    restart: always
+    volumes:
+      - ./volumes/mongo:/data/db
+    ports:
+      - 27017:27017
+  mysql:
+    image: draconids/mysql:5.7.16
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - ./volumes/mysql:/data/db
+    ports:
+      - 3306:3306
+  redis:
+    image: redis:3.2.5
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./volumes/redis:/data
+    command: redis-server --appendonly yes
+  # elastic:
+  #   image: elasticsearch:2.4.1
+  #   ports:
+  #     - 9200:9200
+  #     - 9300:9300
+networks:
+  default:
+    external:
+      name: 'docker-services'
