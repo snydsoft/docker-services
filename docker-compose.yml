@@ -24,15 +24,6 @@ services:
       - 27017:27017
     volumes:
       - ./volumes/mongo:/data/db
-  mysql:
-    image: mysql:5.7.16
-    restart: always
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-    volumes:
-      - ./volumes/mysql:/data/db
   redis:
     image: redis:3.2.5
     restart: always
