@@ -34,6 +34,7 @@ services:
     command: redis-server --appendonly yes
   postgres:
     image: postgres:9.6.1
+    restart: always
     environment:
       LC_ALL: C.UTF-8
       POSTGRES_PASSWORD: 1q2w3e
