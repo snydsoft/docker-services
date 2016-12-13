@@ -32,6 +32,15 @@ services:
     volumes:
       - ./volumes/redis:/data
     command: redis-server --appendonly yes
+  mysql:
+    image: mysql:5.7.16
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - ./volumes/mysql:/data/db
+    ports:
+      - 3306:3306
   postgres:
     image: postgres:9.6.1
     restart: always
