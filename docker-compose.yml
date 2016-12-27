@@ -1,0 +1,71 @@
+version: '2'
+services:
+  nginx:
+    image: nginx:1.10.2
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - ./config/${ENV}/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./config/${ENV}/nginx/conf.d:/etc/nginx/conf.d
+      - ./volumes/nginx/logs:/var/log/nginx
+  jenkins:
+    image: jenkins:latest
+    restart: always
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - ./volumes/jenkins:/var/jenkins_home
+  mongo:
+    image: mongo:3.4.0
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./volumes/mongo:/data/db
+  redis:
+    image: redis:3.2.5
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./volumes/redis:/data
+    command: redis-server --appendonly yes
+  mysql:
+    image: mysql:5.7.16
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - ./volumes/mysql:/data/db
+    ports:
+      - 3306:3306
+  postgres:
+    image: postgres:9.6.1
+    restart: always
+    environment:
+      LC_ALL: C.UTF-8
+      POSTGRES_PASSWORD: 1q2w3e
+    ports:
+      - 5432:5432
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/data
+  # elastic:
+  #   image: elasticsearch:5.1.1
+  #   restart: always
+  #   ports:
+  #     - 9200:9200
+  #     - 9300:9300
+  #   volumes:
+  #     - ./config/${ENV}/elasticsearch:/usr/share/elasticsearch/config
+  #     - ./volumes/elasticsearch:/usr/share/elasticsearch/data
+  #   mem_limit: "4g"
+  #   logging:
+  #     options:
+  #       max-size: "50m"
+  #       max-file: "10"
+networks:
+  default:
+    external:
+      name: 'docker-services'
