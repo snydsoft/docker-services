@@ -17,6 +17,21 @@ services:
       - 50000:50000
     volumes:
       - ./volumes/jenkins:/var/jenkins_home
+  gitlab:
+    image: gitlab/gitlab-ce:8.15.2-ce.0
+    restart: always
+    hostname: 'gitlab.snydsoft.com'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.snydsoft.com'
+    ports:
+      - 80:80
+      - 443:443
+      - 22:22
+    volumes:
+      - ./volumes/gitlab/config:/etc/gitlab
+      - ./volumes/gitlab/logs:/var/log/gitlab
+      - ./volumes/gitlab/data:/var/opt/gitlab
   mongo:
     image: mongo:3.4.0
     restart: always
